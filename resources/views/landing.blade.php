@@ -39,7 +39,7 @@
         Nikmati perjalanan dengan armada mobil listrik resmi VOLTARA. Tentukan tarif sendiri, negosiasi langsung
         dengan driver tanpa lonjakan biaya, bayar tunai setelah sampai.
     </p>
-    <a href="/order" class="mt-8 inline-block rounded-lg bg-[#c6f04a] px-8 py-3 font-semibold text-[#0b3d24]">Masuk untuk Pesan</a>
+    <a href="{{ route('login') }}" class="mt-8 inline-block rounded-lg bg-[#c6f04a] px-8 py-3 font-semibold text-[#0b3d24]">Masuk untuk Pesan</a>
 
     <div class="mt-14 flex justify-center gap-16">
         @foreach ($stats as $s)
