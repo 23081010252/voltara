@@ -1,11 +1,33 @@
-
 <?php
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$base = '/voltara-app';
+
+// Proses ketika tombol Lanjutkan diklik
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $countryCode = $_POST['country_code'] ?? '+62';
+    $phone = trim($_POST['phone'] ?? '');
+
+    if ($phone === '') {
+        header('Location: login.php');
+        exit;
+    }
+
+    // Simpan nomor HP untuk halaman OTP
+    $_SESSION['pending_phone'] = $countryCode . ' ' . $phone;
+
+    // Pindah ke halaman verifikasi OTP
+    header('Location: verifikasi-otp.php');
+    exit;
+}
 
 $pageTitle  = "VOLTARA - Masuk";
 $pageCss    = 'login.css';
 $activePage = 'beranda';
-
-// Memaksa header menggunakan mode publik
 $isLoginPage = true;
 
 ob_start();

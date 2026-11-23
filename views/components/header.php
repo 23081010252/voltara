@@ -1,15 +1,20 @@
-
 <?php
 /**
  * views/components/header.php
  */
 
-$isLoginPage = $isLoginPage ?? false;
+$isLoginPage  = $isLoginPage ?? false;
+$isDriverPage = $isDriverPage ?? false;
+$isPublicPage = $isPublicPage ?? false;
 
-$user = $isLoginPage ? null : ($_SESSION['user'] ?? null);
-
-// Menu khusus halaman login
-if ($isLoginPage) {
+// Halaman login tetap menampilkan navbar pengunjung.
+// Halaman publik tetap bisa membaca session user.
+$user = $isLoginPage
+    ? null
+    : ($_SESSION['user'] ?? null);
+    
+// Menu halaman publik
+if ($isPublicPage || $isLoginPage) {
 
     $menu = [
         'beranda' => [
@@ -61,8 +66,7 @@ if ($user) {
 }
 ?>
 
-<header class="navbar <?= !empty($isLoginPage) ? 'login-navbar' : '' ?>">
-
+<header class="navbar <?= $isLoginPage ? 'login-navbar' : '' ?>">
     <!-- LOGO -->
     <a href="<?= $base ?>/views/pages/landing.php" class="logo">
         VOLT<span>ARA</span>
@@ -94,25 +98,25 @@ if ($user) {
 
         <?php endforeach; ?>
 
-        <?php if ($user && !$isLoginPage): ?>
+        <?php if ($user && !$isLoginPage && !$isDriverPage): ?>
 
-            <a href="<?= $base ?>/views/pages/driver.php"
-               class="driver-mode">
+    <a href="<?= $base ?>/views/pages/driver.php"
+       class="driver-mode">
 
-                Mode Pengemudi
+        Mode Pengemudi
 
-            </a>
+    </a>
 
-        <?php endif; ?>
+<?php endif; ?>
 
     </nav>
 
     <!-- PROFILE / LOGIN -->
     <div class="nav-profile">
-
-        <?php if ($isLoginPage): ?>
-
-            <a href="<?= $base ?>/views/pages/register.php"
+        
+<?php if ($isLoginPage || !$user): ?>
+    
+            <a href="<?= $base ?>/views/pages/login.php"
                class="nav-register">
 
                 Daftar
@@ -149,39 +153,53 @@ if ($user) {
 
             </button>
 
-            <div class="profile">
+            <div class="profile-dropdown">
 
-                <div class="profile-avatar">
-                    <?= htmlspecialchars($initials) ?>
-                </div>
+    <button type="button"
+            class="profile profile-trigger"
+            id="profileToggle"
+            aria-expanded="false"
+            aria-controls="profileMenu">
 
-                <div class="profile-info">
+        <div class="profile-avatar">
+            <?= htmlspecialchars($initials) ?>
+        </div>
 
-                    <strong>
-                        <?= htmlspecialchars($user['name']) ?>
-                    </strong>
+        <div class="profile-info">
+            <strong>
+                <?= htmlspecialchars($user['name']) ?>
+            </strong>
 
-                    <small>
-                        <?= htmlspecialchars($user['status'] ?? 'Pelanggan') ?>
-                    </small>
+            <small>
+                <?= htmlspecialchars($user['status'] ?? 'Pelanggan') ?>
+            </small>
+        </div>
 
-                </div>
+        <svg class="profile-chevron"
+             width="14"
+             height="14"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="2.2"
+             stroke-linecap="round"
+             stroke-linejoin="round">
 
-                <svg class="profile-chevron"
-                     width="14"
-                     height="14"
-                     viewBox="0 0 24 24"
-                     fill="none"
-                     stroke="currentColor"
-                     stroke-width="2.2"
-                     stroke-linecap="round"
-                     stroke-linejoin="round">
+            <path d="m6 9 6 6 6-6"/>
+        </svg>
 
-                    <path d="m6 9 6 6 6-6"/>
+    </button>
 
-                </svg>
+    <div class="profile-menu" id="profileMenu">
 
-            </div>
+        <a href="<?= $base ?>/views/pages/landing.php?logout=1">
+            <span>↪</span>
+            Logout
+        </a>
+
+    </div>
+
+</div>
 
         <?php else: ?>
 

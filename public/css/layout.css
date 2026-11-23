@@ -108,6 +108,23 @@ svg {
   flex-shrink: 0;
 }
 
+.nav-register {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  color: #003c2b;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.nav-register:hover {
+  color: #145a3f;
+}
+
 .nav-login {
   display: inline-flex;
   align-items: center;
@@ -502,4 +519,80 @@ svg {
   .footer {
     padding: 18px 4% 10px;
   }
+}
+
+/* ==============================
+   PROFILE DROPDOWN
+============================== */
+
+.profile-dropdown {
+  position: relative;
+  width: max-content;
+  z-index: 1000;
+}
+
+.profile-trigger {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+}
+
+.profile-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-top: none;
+
+  border-radius: 0 0 14px 14px;
+
+  padding: 5px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+}
+
+.profile-menu.show {
+  display: block;
+}
+
+.profile-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 48px;
+  padding: 0 12px;
+
+  color: #d93636;
+  text-decoration: none;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  border-radius: 9px;
+  transition: background 0.2s;
+}
+
+.profile-menu a:hover {
+  background: #fff0f0;
+}
+
+.profile-trigger .profile-chevron {
+  transition: transform 0.2s ease;
+}
+
+.profile-trigger.active {
+  border-radius: 14px 14px 0 0;
+}
+
+.profile-trigger.active .profile-chevron {
+  transform: rotate(180deg);
 }

@@ -1,8 +1,26 @@
 <?php
-$pageTitle = "VOLTARA - Perjalanan Ramah Lingkungan";
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Proses logout
+if (isset($_GET['logout'])) {
+    $_SESSION = [];
+    session_destroy();
+
+    header('Location: /voltara-app/views/pages/landing.php');
+    exit;
+}
+
 $pageTitle  = "VOLTARA - Perjalanan Ramah Lingkungan";
-$pageCss    = 'landing.css';
-$activePage = 'beranda';      // <- baru, untuk menyorot menu Beranda
+$pageCss    = "landing.css";
+$activePage = "beranda";
+
+$isPublicPage = true;
+
+$showHeader = true;
+$showFooter = true;
 
 $steps = [
     [
@@ -48,7 +66,7 @@ $benefits = [
     [
         "icon" => "♧",
         "title" => "Zero Tailpipe Emissions",
-        "description" => "Tuntut polusi menurunkan polusi udara di setiap kilometer perjalanan."
+        "description" => "Turut menurunkan polusi udara di setiap kilometer perjalanan."
     ],
     [
         "icon" => "▣",
@@ -61,10 +79,7 @@ $benefits = [
         "description" => "Fitur keselamatan aktif, sabuk pengaman menyeluruh, dan monitoring rute."
     ]
 ];
-?>
 
-<?php
-$pageCss = 'landing.css';
 ob_start();
 ?>
 
@@ -358,9 +373,9 @@ ob_start();
         <div class="vehicle-image">
 
             <img
-                src="/voltara-app/public/images/voltara-car.jpg"
-                alt="Armada mobil listrik VOLTARA"
-            >
+    src="/voltara-app/public/img/voltara-car.jpg"
+    alt="Armada mobil listrik VOLTARA"
+>
 
             <div class="vehicle-overlay">
 
@@ -435,7 +450,7 @@ ob_start();
             Pesan Perjalanan
         </a>
 
-        <a href="#" class="cta-secondary">
+<a href="/voltara-app/views/pages/driver.php" class="cta-secondary">
             Daftar Mitra Driver
         </a>
 
